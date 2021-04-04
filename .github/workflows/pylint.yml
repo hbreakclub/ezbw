@@ -36,6 +36,6 @@ jobs:
           commit_message: 'pylint: auto fixes'
           commit_options: '--no-verify --signoff'
           repository: .
-          commit_user_name: IrhamFadzillah
-          commit_user_email: irham8381gmail.com
-          commit_author: IrhamFadzillah <irham8381@gmail.com>
+          commit_user_name: hbreakclub
+          commit_user_email: hiyahiya2612@gmail.com
+          commit_author: hbreakclub <hiyahiya2612@gmail.com>
