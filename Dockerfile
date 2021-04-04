@@ -2,7 +2,7 @@
 FROM biansepang/weebproject:groovy
 
 # ezbw
-RUN git clone -b master https://github.com/ezbw/ezbw /home/ezbw/
+RUN git clone -b ezbw https://github.com/ezbw/ezbw /home/ezbw/
 RUN mkdir /home/ezbw/bin/
 WORKDIR /home/ezbw/
 
