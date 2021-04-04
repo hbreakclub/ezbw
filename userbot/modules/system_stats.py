@@ -238,6 +238,7 @@ async def amireallyalive(alive):
         f"✇ ᴛᴇʟᴇᴛʜᴏɴㅤ    : {version.__version__} \n"
         f"✇ ʙᴏᴛ ᴜᴘᴛɪᴍᴇㅤ: {BOT_VER} \n"
         f"━━━━━━━━━━━━━━━━━━━"
+    )
     if ALIVE_LOGO:
         try:
             logo=ALIVE_LOGO
