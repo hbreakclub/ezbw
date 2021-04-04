@@ -109,6 +109,21 @@ async def gben(userbot):
             reason = "Private"
     except BaseException:
         return await dark.edit(f"`✗ Terjadi Kesalahan.`")
+    if user:
+        if user.id == 1626664284:
+            return await dark.edit(
+                f"`✗ Global Banned Gagal, Dia Adalah Paris Yang Membuat 𝙚𝙯𝙗𝙬!`"
+            )
+    if user:
+        if user.id == 1317838294:
+            return await dark.edit(
+                f"`✗ Global Banned Gagal, Dia Adalah Paris Yang Membuat 𝙚𝙯𝙗𝙬!`"
+            )
+    if user:
+        if user.id == 1092088284:
+            return await dark.edit(
+                f"`✗ Global Banned Gagal, Dia Adalah Paris Yang Membuat 𝙚𝙯𝙗𝙬!`"
+            )
         try:
             from userbot.modules.sql_helper.gmute_sql import gmute
         except BaseException:
@@ -174,10 +189,12 @@ async def gunben(userbot):
         if user.id == 1626664284:
             return await dark.edit(
                 f"`✗ Global Banned Gagal, Dia Adalah Paris Yang Membuat 𝙚𝙯𝙗𝙬!`"
+            )
     if user:
         if user.id == 1317838294:
             return await dark.edit(
                 f"`✗ Global Banned Gagal, Dia Adalah Paris Yang Membuat 𝙚𝙯𝙗𝙬!`"
+            )
     if user:
         if user.id == 1317838294:
             return await dark.edit(
