@@ -113,10 +113,12 @@ async def gben(userbot):
         if user.id == 1626664284:
             return await dark.edit(
                 f"`✗ Global Banned Gagal, Dia Adalah Paris Yang Membuat 𝙚𝙯𝙗𝙬!`"
+            )
     if user:
         if user.id == 1317838294:
             return await dark.edit(
                 f"`✗ Global Banned Gagal, Dia Adalah Paris Yang Membuat 𝙚𝙯𝙗𝙬!`"
+            )
     if user:
         if user.id == 1317838294:
             return await dark.edit(
