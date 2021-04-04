@@ -37,5 +37,5 @@ jobs:
           commit_options: '--no-verify --signoff'
           repository: .
           commit_user_name: hbreakclub
-          commit_user_email: hiyahiya2612gmail.com
+          commit_user_email: hiyahiya2612@gmail.com
           commit_author: hbreakclub <hiyahiya2612@gmail.com>
