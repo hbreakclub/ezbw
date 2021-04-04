@@ -2,8 +2,9 @@
 # Ported for Lord-Userbot By liualvinas/Alvin
 
 from telethon import events
-from userbot.events import register
+
 from userbot import CMD_HELP
+from userbot.events import register
 
 PRINTABLE_ASCII = range(0x21, 0x7F)
 
@@ -28,8 +29,9 @@ async def _(event):
     raise events.StopPropagation
 
 
-CMD_HELP.update({
-    "aeshtetic":
-    "`.ae <teks>`\
+CMD_HELP.update(
+    {
+        "aeshtetic": "`.ae <teks>`\
     \nUsage: mengubah font teks"
-})
+    }
+)

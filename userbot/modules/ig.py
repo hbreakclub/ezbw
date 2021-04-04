@@ -14,8 +14,9 @@
 
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+
+from userbot import CMD_HELP, bot
 from userbot.events import register
-from userbot import bot, CMD_HELP
 
 # Alvin Gans
 # Apin Gansssss Anjjjayy Yahahaha
@@ -49,9 +50,7 @@ async def insta(event):
             await event.edit("`Mohon Buka Blokir` @SaveAsbot `Lalu Coba Lagi`")
             return
         if response.text.startswith("Forward"):
-            await event.edit(
-                "Uhmm Sepertinya Private."
-            )
+            await event.edit("Uhmm Sepertinya Private.")
         else:
             await event.delete()
             await event.client.send_file(
@@ -67,5 +66,9 @@ async def insta(event):
 # By Lord - Userbot
 # Alvin Gansssssss Mksh Sma Sma
 # Alvin Gans
-CMD_HELP.update({"instagram": "**Modules:** __Instagram__\n\n**Perintah:** `.ig`"
-                 "\n**Penjelasan:** Download Media di Postingan Instagram, Balas ke link instagram ketik `.ig`"})
+CMD_HELP.update(
+    {
+        "instagram": "**Modules:** __Instagram__\n\n**Perintah:** `.ig`"
+        "\n**Penjelasan:** Download Media di Postingan Instagram, Balas ke link instagram ketik `.ig`"
+    }
+)

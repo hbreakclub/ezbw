@@ -57,5 +57,4 @@ async def _(event):
         return await event.edit("`↺ Tidak Menemukan Wallpaper`")
 
 
-CMD_HELP.update({"wallpaper": ">`.wall <query>`"
-                 "\nUsage: Mencari Wallpaper Bagus."})
+CMD_HELP.update({"wallpaper": ">`.wall <query>`" "\nUsage: Mencari Wallpaper Bagus."})

@@ -6,14 +6,15 @@
 
 import os
 import urllib
-import requests
-from re import sub
-from cowpy import cow
 from asyncio import sleep
 from collections import deque
 from random import choice, getrandbits, randint
+from re import sub
 
-from userbot import bot, CMD_HELP
+import requests
+from cowpy import cow
+
+from userbot import CMD_HELP, bot
 from userbot.events import register
 from userbot.modules.admin import get_user_from_event
 
@@ -28,119 +29,121 @@ METOOSTR = [
     "Aku Juga",
 ]
 
-ZALG_LIST = [[
-    "̖",
-    " ̗",
-    " ̘",
-    " ̙",
-    " ̜",
-    " ̝",
-    " ̞",
-    " ̟",
-    " ̠",
-    " ̤",
-    " ̥",
-    " ̦",
-    " ̩",
-    " ̪",
-    " ̫",
-    " ̬",
-    " ̭",
-    " ̮",
-    " ̯",
-    " ̰",
-    " ̱",
-    " ̲",
-    " ̳",
-    " ̹",
-    " ̺",
-    " ̻",
-    " ̼",
-    " ͅ",
-    " ͇",
-    " ͈",
-    " ͉",
-    " ͍",
-    " ͎",
-    " ͓",
-    " ͔",
-    " ͕",
-    " ͖",
-    " ͙",
-    " ͚",
-    " ",
-],
+ZALG_LIST = [
     [
-    " ̍",
-    " ̎",
-    " ̄",
-    " ̅",
-    " ̿",
-    " ̑",
-    " ̆",
-    " ̐",
-    " ͒",
-    " ͗",
-    " ͑",
-    " ̇",
-    " ̈",
-    " ̊",
-    " ͂",
-    " ̓",
-    " ̈́",
-    " ͊",
-    " ͋",
-    " ͌",
-    " ̃",
-    " ̂",
-    " ̌",
-    " ͐",
-    " ́",
-    " ̋",
-    " ̏",
-    " ̽",
-    " ̉",
-    " ͣ",
-    " ͤ",
-    " ͥ",
-    " ͦ",
-    " ͧ",
-    " ͨ",
-    " ͩ",
-    " ͪ",
-    " ͫ",
-    " ͬ",
-    " ͭ",
-    " ͮ",
-    " ͯ",
-    " ̾",
-    " ͛",
-    " ͆",
-    " ̚",
-],
+        "̖",
+        " ̗",
+        " ̘",
+        " ̙",
+        " ̜",
+        " ̝",
+        " ̞",
+        " ̟",
+        " ̠",
+        " ̤",
+        " ̥",
+        " ̦",
+        " ̩",
+        " ̪",
+        " ̫",
+        " ̬",
+        " ̭",
+        " ̮",
+        " ̯",
+        " ̰",
+        " ̱",
+        " ̲",
+        " ̳",
+        " ̹",
+        " ̺",
+        " ̻",
+        " ̼",
+        " ͅ",
+        " ͇",
+        " ͈",
+        " ͉",
+        " ͍",
+        " ͎",
+        " ͓",
+        " ͔",
+        " ͕",
+        " ͖",
+        " ͙",
+        " ͚",
+        " ",
+    ],
     [
-    " ̕",
-    " ̛",
-    " ̀",
-    " ́",
-    " ͘",
-    " ̡",
-    " ̢",
-    " ̧",
-    " ̨",
-    " ̴",
-    " ̵",
-    " ̶",
-    " ͜",
-    " ͝",
-    " ͞",
-    " ͟",
-    " ͠",
-    " ͢",
-    " ̸",
-    " ̷",
-    " ͡",
-]]
+        " ̍",
+        " ̎",
+        " ̄",
+        " ̅",
+        " ̿",
+        " ̑",
+        " ̆",
+        " ̐",
+        " ͒",
+        " ͗",
+        " ͑",
+        " ̇",
+        " ̈",
+        " ̊",
+        " ͂",
+        " ̓",
+        " ̈́",
+        " ͊",
+        " ͋",
+        " ͌",
+        " ̃",
+        " ̂",
+        " ̌",
+        " ͐",
+        " ́",
+        " ̋",
+        " ̏",
+        " ̽",
+        " ̉",
+        " ͣ",
+        " ͤ",
+        " ͥ",
+        " ͦ",
+        " ͧ",
+        " ͨ",
+        " ͩ",
+        " ͪ",
+        " ͫ",
+        " ͬ",
+        " ͭ",
+        " ͮ",
+        " ͯ",
+        " ̾",
+        " ͛",
+        " ͆",
+        " ̚",
+    ],
+    [
+        " ̕",
+        " ̛",
+        " ̀",
+        " ́",
+        " ͘",
+        " ̡",
+        " ̢",
+        " ̧",
+        " ̨",
+        " ̴",
+        " ̵",
+        " ̶",
+        " ͜",
+        " ͝",
+        " ͞",
+        " ͟",
+        " ͠",
+        " ͢",
+        " ̸",
+        " ̷",
+        " ͡",
+    ],
+]
 
 EMOJIS = [
     "😂",
@@ -574,7 +577,8 @@ SLAP_TEMPLATES_EN = [
     "taruh {victim} di tong sampah.",
     "Menendang {victim} dan melemparnya ke sungai.",
     "letakkan {victim} di rumah hantu.",
-    "menampar {victim} dengan tongkat besi!"]
+    "menampar {victim} dengan tongkat besi!",
+]
 
 ITEMS_EN = [
     "Tabung Gas",
@@ -661,7 +665,7 @@ SLAP_TEMPLATES_ID = [
     "Melemparkan {item} {where} {victim}.",
     "Meletakan {item} {where} {victim}.",
     "Menyerang {victim} menggunakan {anime}.",
-    "Mengehack Seluruh akun {victim}"
+    "Mengehack Seluruh akun {victim}",
 ]
 
 ITEMS_ID = [
@@ -733,7 +737,7 @@ SLAP_TEMPLATES_Jutsu = [
     "Menyerang {victim} Menggunakan {hits}.",
     "Menyerang {victim} Menggunakan {item}.",
     "Melemparkan {throws} kepada {victim} .",
-    "Melemparkan {throws} {where} {victim}."
+    "Melemparkan {throws} {where} {victim}.",
 ]
 
 ITEMS_Jutsu = [
@@ -818,60 +822,62 @@ GAMBAR_KONTL = """
 WHERE_Jutsu = ["Di Pipi", "Di Kepala", "Di Bokong", "Di Badan ,Di Pantat"]
 
 normiefont = [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z']
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+]
 
 weebyfont = [
-    '卂',
-    '乃',
-    '匚',
-    '刀',
-    '乇',
-    '下',
-    '厶',
-    '卄',
-    '工',
-    '丁',
-    '长',
-    '乚',
-    '从',
-    '𠘨',
-    '口',
-    '尸',
-    '㔿',
-    '尺',
-    '丂',
-    '丅',
-    '凵',
-    'リ',
-    '山',
-    '乂',
-    '丫',
-    '乙']
+    "卂",
+    "乃",
+    "匚",
+    "刀",
+    "乇",
+    "下",
+    "厶",
+    "卄",
+    "工",
+    "丁",
+    "长",
+    "乚",
+    "从",
+    "𠘨",
+    "口",
+    "尸",
+    "㔿",
+    "尺",
+    "丂",
+    "丅",
+    "凵",
+    "リ",
+    "山",
+    "乂",
+    "丫",
+    "乙",
+]
 
 # ===========================================
 
@@ -900,8 +906,7 @@ async def coin(event):
         input_str = input_str.lower()
     if r == "Kepala":
         if input_str == "Kepala":
-            await event.edit(
-                "Koin Itu Mendarat Di: **Kepala**.\nKamu Benar.")
+            await event.edit("Koin Itu Mendarat Di: **Kepala**.\nKamu Benar.")
         elif input_str == "Ekor":
             await event.edit(
                 "Koin Itu Mendarat Di: **Kepala**.\nKamu Salah, Coba Lagi..."
@@ -910,8 +915,7 @@ async def coin(event):
             await event.edit("Koin Itu Mendarat Di: **Kepala**.")
     elif r == "Ekor":
         if input_str == "Ekor":
-            await event.edit(
-                "Koin Itu Mendarat Di: **Ekor**.\nKamu Benar.")
+            await event.edit("Koin Itu Mendarat Di: **Ekor**.\nKamu Benar.")
         elif input_str == "Kepala":
             await event.edit(
                 "Koin Itu Mendarat Di: **Ekor**.\nKamu Salah, Coba Lagi..."
@@ -976,7 +980,8 @@ async def slap(replied_user, event):
         where = choice(WHERE_EN)
 
     caption = "..." + temp.format(
-        victim=slapped, item=item, hits=hit, throws=throw, where=where)
+        victim=slapped, item=item, hits=hit, throws=throw, where=where
+    )
 
     return caption
 
@@ -986,11 +991,9 @@ async def boobs(e):
     await e.edit("`Berdosa, Mendapatkan Gambar Boobs...`")
     await sleep(3)
     await e.edit("`Mengirim Gambar Boobs...`")
-    nsfw = requests.get(
-        'http://api.oboobs.ru/noise/1').json()[0]["Gambar Boobs"]
-    urllib.request.urlretrieve(
-        "http://media.oboobs.ru/{}".format(nsfw), "*.jpg")
-    os.rename('*.jpg', 'boobs.jpg')
+    nsfw = requests.get("http://api.oboobs.ru/noise/1").json()[0]["Gambar Boobs"]
+    urllib.request.urlretrieve("http://media.oboobs.ru/{}".format(nsfw), "*.jpg")
+    os.rename("*.jpg", "boobs.jpg")
     await e.client.send_file(e.chat_id, "boobs.jpg")
     os.remove("boobs.jpg")
     await e.delete()
@@ -1001,11 +1004,9 @@ async def butts(e):
     await e.edit("`Berdosa, Mendapatkan Gambar Pantat Yang Indah...`")
     await sleep(3)
     await e.edit("`Mengirim Gambar Pantat Indah...`")
-    nsfw = requests.get(
-        'http://api.obutts.ru/noise/1').json()[0]["Gambar Pantat"]
-    urllib.request.urlretrieve(
-        "http://media.obutts.ru/{}".format(nsfw), "*.jpg")
-    os.rename('*.jpg', 'butts.jpg')
+    nsfw = requests.get("http://api.obutts.ru/noise/1").json()[0]["Gambar Pantat"]
+    urllib.request.urlretrieve("http://media.obutts.ru/{}".format(nsfw), "*.jpg")
+    os.rename("*.jpg", "butts.jpg")
     await e.client.send_file(e.chat_id, "butts.jpg")
     os.remove("butts.jpg")
     await e.delete()
@@ -1020,10 +1021,9 @@ async def decide(event):
     else:
         r = requests.get(f"https://yesno.wtf/api").json()
     await event.delete()
-    await event.client.send_message(event.chat_id,
-                                    str(r["answer"]).upper(),
-                                    reply_to=message_id,
-                                    file=r["image"])
+    await event.client.send_message(
+        event.chat_id, str(r["answer"]).upper(), reply_to=message_id, file=r["image"]
+    )
 
 
 @register(outgoing=True, pattern=r"^\.fp$")
@@ -1055,7 +1055,9 @@ async def copypasta(cp_e):
     elif textx:
         message = textx.text
     else:
-        return await cp_e.edit("`😂🅱️AhHH👐MaNtAp👅Bro👅UnTuk✌️MeMbuAT👌Ku👐TeRliHat👀LuCu💞HaHAhaA!💦`")
+        return await cp_e.edit(
+            "`😂🅱️AhHH👐MaNtAp👅Bro👅UnTuk✌️MeMbuAT👌Ku👐TeRliHat👀LuCu💞HaHAhaA!💦`"
+        )
 
     reply_text = choice(EMOJIS)
     # choose a random character in the message to be substituted with 🅱️
@@ -1115,8 +1117,7 @@ async def stretch(stret):
         return await stret.edit("`Beriiiiiiiiikaaannnn sebuuuuuuuuuah teeeeeeeks!`")
 
     count = randint(3, 10)
-    reply_text = sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count),
-                     message)
+    reply_text = sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count), message)
     await stret.edit(reply_text)
 
 
@@ -1144,14 +1145,11 @@ async def zal(zgfy):
             rand = randint(0, 2)
 
             if rand == 0:
-                charac = charac.strip() + \
-                    choice(ZALG_LIST[0]).strip()
+                charac = charac.strip() + choice(ZALG_LIST[0]).strip()
             elif rand == 1:
-                charac = charac.strip() + \
-                    choice(ZALG_LIST[1]).strip()
+                charac = charac.strip() + choice(ZALG_LIST[1]).strip()
             else:
-                charac = charac.strip() + \
-                    choice(ZALG_LIST[2]).strip()
+                charac = charac.strip() + choice(ZALG_LIST[2]).strip()
 
         reply_text.append(charac)
 
@@ -1406,7 +1404,7 @@ async def weebify(e):
     if not args:
         await e.edit("`Apa Yang Anda Lakukan?`")
         return
-    string = '  '.join(args).lower()
+    string = "  ".join(args).lower()
     for normiecharacter in string:
         if normiecharacter in normiefont:
             weebycharacter = weebyfont[normiefont.index(normiecharacter)]
@@ -1437,16 +1435,27 @@ async def bluetext(bt_e):
     if await bt_e.get_reply_message() and bt_e.is_group:
         await bt_e.edit(
             "/TEKSBIRU /APAKAH /ANDA.\n"
-            "/SEDANG /GABUT /KARNA /TERTARIK /MELIHAT /TEKS /BIRU /PASTI /ANDA /BOSAN?")
+            "/SEDANG /GABUT /KARNA /TERTARIK /MELIHAT /TEKS /BIRU /PASTI /ANDA /BOSAN?"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.f (.*)")
 async def payf(event):
     paytext = event.pattern_match.group(1)
     pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
-        paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
-        paytext * 6, paytext * 6, paytext * 2, paytext * 2, paytext * 2,
-        paytext * 2, paytext * 2)
+        paytext * 8,
+        paytext * 8,
+        paytext * 2,
+        paytext * 2,
+        paytext * 2,
+        paytext * 6,
+        paytext * 6,
+        paytext * 2,
+        paytext * 2,
+        paytext * 2,
+        paytext * 2,
+        paytext * 2,
+    )
     await event.edit(pay)
 
 
@@ -1461,10 +1470,11 @@ async def let_me_google_that_for_you(lmgtfy_q):
         query = query.message
     query_encoded = query.replace(" ", "+")
     lfy_url = f"http://lmgtfy.com/?s=g&iie=1&q={query_encoded}"
-    payload = {'format': 'json', 'url': lfy_url}
-    r = requests.get('http://is.gd/create.php', params=payload)
-    await lmgtfy_q.edit("Ini Dia, Bantu Dirimu Sendiri."
-                        f"\n[{query}]({r.json()['shorturl']})")
+    payload = {"format": "json", "url": lfy_url}
+    r = requests.get("http://is.gd/create.php", params=payload)
+    await lmgtfy_q.edit(
+        "Ini Dia, Bantu Dirimu Sendiri." f"\n[{query}]({r.json()['shorturl']})"
+    )
 
 
 @register(outgoing=True, pattern=r"^\.sayhi$")
@@ -1478,15 +1488,24 @@ async def sayhi(e):
         "\n💰🔷💰💰💰🔷💰💰💰🔷💰💰"
         "\n💰🔷💰💰💰🔷💰💰💰🔷💰💰"
         "\n💰🔷💰💰💰🔷💰💰🔷🔷🔷💰"
-        "\n💰💰💰💰💰💰💰💰💰💰💰💰")
+        "\n💰💰💰💰💰💰💰💰💰💰💰💰"
+    )
 
 
 @register(pattern=r".scam(?: |$)(.*)", outgoing=True)
 async def scam(event):
     """ Just a small command to fake chat actions for fun !! """
     options = [
-        'mengetik', 'kontak', 'game', 'lokasi', 'suara', 'bulat', 'video',
-        'foto', 'dokumen', 'batal'
+        "mengetik",
+        "kontak",
+        "game",
+        "lokasi",
+        "suara",
+        "bulat",
+        "video",
+        "foto",
+        "dokumen",
+        "batal",
     ]
     input_str = event.pattern_match.group(1)
     args = input_str.split()
@@ -1507,7 +1526,7 @@ async def scam(event):
         await event.edit("`Tidak Valid`")
         return
     try:
-        if (scam_time > 300):
+        if scam_time > 300:
             await event.delete()
             async with event.client.action(event.chat_id, scam_action):
                 await sleep(scam_time)
@@ -1549,99 +1568,113 @@ async def leave(e):
 @register(outgoing=True, pattern=r"^\.fail$")
 async def fail(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ `"
-                     "`\n████▌▄▌▄▐▐▌█████ `"
-                     "`\n████▌▄▌▄▐▐▌▀████ `"
-                     "`\n▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ `")
+        await e.edit(
+            "`\n▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ `"
+            "`\n████▌▄▌▄▐▐▌█████ `"
+            "`\n████▌▄▌▄▐▐▌▀████ `"
+            "`\n▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ `"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.lol$")
 async def lol(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n╱┏┓╱╱╱╭━━━╮┏┓╱╱╱╱ `"
-                     "`\n╱┃┃╱╱╱┃╭━╮┃┃┃╱╱╱╱ `"
-                     "`\n╱┃┗━━┓┃╰━╯┃┃┗━━┓╱ `"
-                     "`\n╱┗━━━┛╰━━━╯┗━━━┛╱ `")
+        await e.edit(
+            "`\n╱┏┓╱╱╱╭━━━╮┏┓╱╱╱╱ `"
+            "`\n╱┃┃╱╱╱┃╭━╮┃┃┃╱╱╱╱ `"
+            "`\n╱┃┗━━┓┃╰━╯┃┃┗━━┓╱ `"
+            "`\n╱┗━━━┛╰━━━╯┗━━━┛╱ `"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.rock$")
 async def lol(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n┈╭╮┈┈┈┈┈┈┈┈┈┈┈┈ `"
-                     "`\n┈┃┃┈╭╮┈┏╮╭╮╭╮┃╭ `"
-                     "`\n┈┃┃┈┃┃┈┣┫┃┃┃┈┣┫ `"
-                     "`\n┈┃┣┳┫┃┈┃╰╰╯╰╯┃╰ `"
-                     "`\n╭┻┻┻┫┃┈┈╭╮┃┃━┳━ `"
-                     "`\n┃╱╭━╯┃┈┈┃┃┃┃┈┃┈ `"
-                     "`\n╰╮╱╱╱┃┈┈╰╯╰╯┈┃┈ `")
+        await e.edit(
+            "`\n┈╭╮┈┈┈┈┈┈┈┈┈┈┈┈ `"
+            "`\n┈┃┃┈╭╮┈┏╮╭╮╭╮┃╭ `"
+            "`\n┈┃┃┈┃┃┈┣┫┃┃┃┈┣┫ `"
+            "`\n┈┃┣┳┫┃┈┃╰╰╯╰╯┃╰ `"
+            "`\n╭┻┻┻┫┃┈┈╭╮┃┃━┳━ `"
+            "`\n┃╱╭━╯┃┈┈┃┃┃┃┈┃┈ `"
+            "`\n╰╮╱╱╱┃┈┈╰╯╰╯┈┃┈ `"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.lool$")
 async def lool(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n╭╭━━━╮╮┈┈┈┈┈┈┈┈┈┈\n┈┃╭━━╯┈┈┈┈▕╲▂▂╱▏┈\n┈┃┃╱▔▔▔▔▔▔▔▏╱▋▋╮┈`"
-                     "`\n┈┃╰▏┃╱╭╮┃╱╱▏╱╱▆┃┈\n┈╰━▏┗━╰╯┗━╱╱╱╰┻┫┈\n┈┈┈▏┏┳━━━━▏┏┳━━╯┈`"
-                     "`\n┈┈┈▏┃┃┈┈┈┈▏┃┃┈┈┈┈ `")
+        await e.edit(
+            "`\n╭╭━━━╮╮┈┈┈┈┈┈┈┈┈┈\n┈┃╭━━╯┈┈┈┈▕╲▂▂╱▏┈\n┈┃┃╱▔▔▔▔▔▔▔▏╱▋▋╮┈`"
+            "`\n┈┃╰▏┃╱╭╮┃╱╱▏╱╱▆┃┈\n┈╰━▏┗━╰╯┗━╱╱╱╰┻┫┈\n┈┈┈▏┏┳━━━━▏┏┳━━╯┈`"
+            "`\n┈┈┈▏┃┃┈┈┈┈▏┃┃┈┈┈┈ `"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.stfu$")
 async def stfu(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n██████████████████████████████`"
-                     "`\n██▀▀▀▀████▀▀▀▀████▀▀▀▀▀███▀▀██▀▀█`"
-                     "`\n█──────██──────██───────██──██──█`"
-                     "`\n█──██▄▄████──████──███▄▄██──██──█`"
-                     "`\n█▄────▀████──████────█████──██──█`"
-                     "`\n█▀▀██──████──████──███████──██──█`"
-                     "`\n█──────████──████──███████──────█`"
-                     "`\n██▄▄▄▄█████▄▄████▄▄████████▄▄▄▄██`"
-                     "`\n█████████████████████████████████`")
+        await e.edit(
+            "`\n██████████████████████████████`"
+            "`\n██▀▀▀▀████▀▀▀▀████▀▀▀▀▀███▀▀██▀▀█`"
+            "`\n█──────██──────██───────██──██──█`"
+            "`\n█──██▄▄████──████──███▄▄██──██──█`"
+            "`\n█▄────▀████──████────█████──██──█`"
+            "`\n█▀▀██──████──████──███████──██──█`"
+            "`\n█──────████──████──███████──────█`"
+            "`\n██▄▄▄▄█████▄▄████▄▄████████▄▄▄▄██`"
+            "`\n█████████████████████████████████`"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.gtfo$")
 async def gtfo(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n███████████████████████████████ `"
-                     "`\n█▀▀▀▀▀▀▀█▀▀▀▀▀▀█▀▀▀▀▀▀▀█▀▀▀▀▀▀█ `"
-                     "`\n█───────█──────█───────█──────█ `"
-                     "`\n█──███──███──███──███▄▄█──██──█ `"
-                     "`\n█──███▄▄███──███─────███──██──█ `"
-                     "`\n█──██───███──███──██████──██──█ `"
-                     "`\n█──▀▀▀──███──███──██████──────█ `"
-                     "`\n█▄▄▄▄▄▄▄███▄▄███▄▄██████▄▄▄▄▄▄█ `"
-                     "`\n███████████████████████████████ `")
+        await e.edit(
+            "`\n███████████████████████████████ `"
+            "`\n█▀▀▀▀▀▀▀█▀▀▀▀▀▀█▀▀▀▀▀▀▀█▀▀▀▀▀▀█ `"
+            "`\n█───────█──────█───────█──────█ `"
+            "`\n█──███──███──███──███▄▄█──██──█ `"
+            "`\n█──███▄▄███──███─────███──██──█ `"
+            "`\n█──██───███──███──██████──██──█ `"
+            "`\n█──▀▀▀──███──███──██████──────█ `"
+            "`\n█▄▄▄▄▄▄▄███▄▄███▄▄██████▄▄▄▄▄▄█ `"
+            "`\n███████████████████████████████ `"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.nih$")
 async def nih(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n(\\_/)`"
-                     "`\n(●_●)`"
-                     "`\n />💖 *Ini Buat Kamu`"
-                     "\n                    \n"
-                     r"`(\_/)`"
-                     "`\n(●_●)`"
-                     "`\n💖<\\  *Tapi Bo'ong`")
+        await e.edit(
+            "`\n(\\_/)`"
+            "`\n(●_●)`"
+            "`\n />💖 *Ini Buat Kamu`"
+            "\n                    \n"
+            r"`(\_/)`"
+            "`\n(●_●)`"
+            "`\n💖<\\  *Tapi Bo'ong`"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.fag$")
 async def gtfo(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n█████████`"
-                     "`\n█▄█████▄█`"
-                     "`\n█▼▼▼▼▼`"
-                     "`\n█       STFU FAGGOT'S`"
-                     "`\n█▲▲▲▲▲`"
-                     "`\n█████████`"
-                     "`\n ██   ██`")
+        await e.edit(
+            "`\n█████████`"
+            "`\n█▄█████▄█`"
+            "`\n█▼▼▼▼▼`"
+            "`\n█       STFU FAGGOT'S`"
+            "`\n█▲▲▲▲▲`"
+            "`\n█████████`"
+            "`\n ██   ██`"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.tai$")
 async def taco(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("\n{\\__/}"
-                     "\n(●_●)"
-                     "\n( >💩 Mau Tai Ku?")
+        await e.edit("\n{\\__/}" "\n(●_●)" "\n( >💩 Mau Tai Ku?")
 
 
 @register(outgoing=True, pattern=r"^\.paw$")
@@ -1659,43 +1692,53 @@ async def tf(e):
 @register(outgoing=True, pattern=r"^\.gey$")
 async def gey(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n┈┈┈╭━━━━━╮┈┈┈┈┈\n┈┈┈┃┊┊┊┊┊┃┈┈┈┈┈`"
-                     "`\n┈┈┈┃┊┊╭━╮┻╮┈┈┈┈\n┈┈┈╱╲┊┃▋┃▋┃┈┈┈┈\n┈┈╭┻┊┊╰━┻━╮┈┈┈┈`"
-                     "`\n┈┈╰┳┊╭━━━┳╯┈┈┈┈\n┈┈┈┃┊┃╰━━┫┈Lu Bau Hehe`"
-                     "\n┈┈┈┈┈┈┏━┓┈┈┈┈┈┈")
+        await e.edit(
+            "`\n┈┈┈╭━━━━━╮┈┈┈┈┈\n┈┈┈┃┊┊┊┊┊┃┈┈┈┈┈`"
+            "`\n┈┈┈┃┊┊╭━╮┻╮┈┈┈┈\n┈┈┈╱╲┊┃▋┃▋┃┈┈┈┈\n┈┈╭┻┊┊╰━┻━╮┈┈┈┈`"
+            "`\n┈┈╰┳┊╭━━━┳╯┈┈┈┈\n┈┈┈┃┊┃╰━━┫┈Lu Bau Hehe`"
+            "\n┈┈┈┈┈┈┏━┓┈┈┈┈┈┈"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.gay$")
 async def gey(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n┈┈┈╭━━━━━╮┈┈┈┈┈\n┈┈┈┃┊┊┊┊┊┃┈┈┈┈┈`"
-                     "`\n┈┈┈┃┊┊╭━╮┻╮┈┈┈┈\n┈┈┈╱╲┊┃▋┃▋┃┈┈┈┈\n┈┈╭┻┊┊╰━┻━╮┈┈┈┈`"
-                     "`\n┈┈╰┳┊╭━━━┳╯┈┈┈┈\n┈┈┈┃┊┃╰━━┫┈ANDA GAY`"
-                     "\n┈┈┈┈┈┈┏━┓┈┈┈┈┈┈")
+        await e.edit(
+            "`\n┈┈┈╭━━━━━╮┈┈┈┈┈\n┈┈┈┃┊┊┊┊┊┃┈┈┈┈┈`"
+            "`\n┈┈┈┃┊┊╭━╮┻╮┈┈┈┈\n┈┈┈╱╲┊┃▋┃▋┃┈┈┈┈\n┈┈╭┻┊┊╰━┻━╮┈┈┈┈`"
+            "`\n┈┈╰┳┊╭━━━┳╯┈┈┈┈\n┈┈┈┃┊┃╰━━┫┈ANDA GAY`"
+            "\n┈┈┈┈┈┈┏━┓┈┈┈┈┈┈"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.bot$")
 async def bot(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("` \n   ╲╲╭━━━━╮ \n╭╮┃▆┈┈▆┃╭╮ \n┃╰┫▽▽▽┣╯┃ \n╰━┫△△△┣━╯`"
-                     "`\n╲╲┃┈┈┈┈┃  \n╲╲┃┈┏┓┈┃ `")
+        await e.edit(
+            "` \n   ╲╲╭━━━━╮ \n╭╮┃▆┈┈▆┃╭╮ \n┃╰┫▽▽▽┣╯┃ \n╰━┫△△△┣━╯`"
+            "`\n╲╲┃┈┈┈┈┃  \n╲╲┃┈┏┓┈┃ `"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.hey$")
 async def hey(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("\n┈┈┈╱▔▔▔▔╲┈╭━━━━━\n┈┈▕▂▂▂▂▂▂▏┃HEY!┊😀`"
-                     "`\n┈┈▕▔▇▔▔┳▔▏╰┳╮HEY!┊\n┈┈▕╭━╰╯━╮▏━╯╰━━━\n╱▔▔▏▅▅▅▅▕▔▔╲┈┈┈┈`"
-                     "`\n▏┈┈╲▂▂▂▂╱┈┈┈▏┈┈┈`")
+        await e.edit(
+            "\n┈┈┈╱▔▔▔▔╲┈╭━━━━━\n┈┈▕▂▂▂▂▂▂▏┃HEY!┊😀`"
+            "`\n┈┈▕▔▇▔▔┳▔▏╰┳╮HEY!┊\n┈┈▕╭━╰╯━╮▏━╯╰━━━\n╱▔▔▏▅▅▅▅▕▔▔╲┈┈┈┈`"
+            "`\n▏┈┈╲▂▂▂▂╱┈┈┈▏┈┈┈`"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.nou$")
 async def nou(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`\n┈╭╮╭╮\n┈┃┃┃┃\n╭┻┗┻┗╮`"
-                     "`\n┃┈▋┈▋┃\n┃┈╭▋━╮━╮\n┃┈┈╭╰╯╰╯╮`"
-                     "`\n┫┈┈  NoU\n┃┈╰╰━━━━╯`"
-                     "`\n┗━━┻━┛`")
+        await e.edit(
+            "`\n┈╭╮╭╮\n┈┃┃┃┃\n╭┻┗┻┗╮`"
+            "`\n┃┈▋┈▋┃\n┃┈╭▋━╮━╮\n┃┈┈╭╰╯╰╯╮`"
+            "`\n┫┈┈  NoU\n┃┈╰╰━━━━╯`"
+            "`\n┗━━┻━┛`"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.iwi(?: |$)(.*)")
@@ -1779,7 +1822,7 @@ async def emoji_penis(e):
     emoji = e.pattern_match.group(1)
     titid = GAMBAR_TITIT
     if emoji:
-        titid = titid.replace('😋', emoji)
+        titid = titid.replace("😋", emoji)
     await e.edit(titid)
 
 
@@ -1788,7 +1831,7 @@ async def emoji_kontl(e):
     emoji = e.pattern_match.group(1)
     kontl = GAMBAR_KONTL
     if emoji:
-        kontl = kontl.replace('😂', emoji)
+        kontl = kontl.replace("😂", emoji)
     await e.edit(kontl)
 
 
@@ -1797,7 +1840,7 @@ async def emoji_oke(e):
     emoji = e.pattern_match.group(1)
     oke = GAMBAR_OK
     if emoji:
-        oke = oke.replace('😂', emoji)
+        oke = oke.replace("😂", emoji)
     await e.edit(oke)
 
 
@@ -1806,71 +1849,72 @@ async def emoji_tengkorak(e):
     emoji = e.pattern_match.group(1)
     tengkorak = GAMBAR_TENGKORAK
     if emoji:
-        tengkorak = tengkorak.replace('😂', emoji)
+        tengkorak = tengkorak.replace("😂", emoji)
     await e.edit(tengkorak)
 
 
-CMD_HELP.update({
-    "memes":
-    ">`.cowsay`"
-    "\nUsage: sapi yang mengatakan sesuatu."
-    "\n\n> .cp"
-    "\nUsage: Copy paste meme terkenal"
-    "\n\n>`.vapor`"
-    "\nUsage: Menguapkan semuanya!"
-    "\n\n>`.str`"
-    "\nUsage: Regangkan."
-    "\n\n>`.10iq`"
-    "\nUsage: Kamu mundur !!"
-    "\n\n>`.zal`"
-    "\nUsage: Munculkan perasaan kacau."
-    "\n\n>`.Oem`"
-    "\nPenggunaan: Oeeeem"
-    "\n\n>`.fp`"
-    "\nUsage: Telapak Tangan:P"
-    "\n\n>`.moon`"
-    "\nUsage: animasi bulan."
-    "\n\n>`.clock`"
-    "\nUsage: animasi jam."
-    "\n\n>`.hi`"
-    "\nUsage: Sapa semuanya!"
-    "\n\n>`.coinflip` <Kepala/Ekor>"
-    "\nUsage: Melempar koin !!"
-    "\n\n>`.owo`"
-    "\nUsage: UwU"
-    "\n\n>`.react`"
-    "\nUsage: Buat Userbot Anda bereaksi terhadap semuanya."
-    "\n\n>`.slap`"
-    "\nUsage: balas tampar mereka dengan benda acak !!"
-    "\n\n>`.cry`"
-    "\nUsage: jika kamu melakukan ini, aku akan menangis."
-    "\n\n>`.shg`"
-    "\nUsage: Angkat bahu!"
-    "\n\n>`.run`"
-    "\nUsage: Biarkan Aku Lari, Lari, LARI!"
-    "\n\n>`.chase`"
-    "\nUsage: Sebaiknya Anda mulai berlari"
-    "\n\n>`.metoo`"
-    "\nUsage: Haha ya"
-    "\n\n>`.mock`"
-    "\nUsage: Lakukan dan temukan kesenangan yang sesungguhnya."
-    "\n\n>`.clap`"
-    "\nUsage: Puji orang!"
-    "\n\n>`.f` <emoji/karakter>"
-    "\nUsage: F."
-    "\n\n>`.bt`"
-    "\nUsage: Percayalah, Anda akan menemukan ini berguna."
-    "\n\n>`.weeb`"
-    "\nUsage: Untuk Mengubah Teks Menjadi Weeb-ify."
-    "\n\n>`.type` <teks>"
-    "\nUsage: Hanya perintah kecil untuk membuat keyboard Anda menjadi mesin tik!"
-    "\n\n>`.lfy` <query>"
-    "\nUsage: Biar saya Google itu untuk Anda dengan cepat!"
-    "\n\n>`.decide` [Alternatif: (.yes, .no, .maybe)]"
-    "\nUsage: Buat keputusan cepat."
-    "\n\n> `.nou` `.bot` `.rock` `.gey` `.tf` `.paw` `.tai` `.nih`"
-    "\n> `.fag` `.gtfo`; `.stfu` `.lol` `.lool` `.fail` `.leave`"
-    "\n> `.iwi` `.sayhi` `.koc` `.gas` `.earth` `.love` `.rain`"
-    "\n> `.penis` `.emo` `.fuck` `.skull`  `.monyet`\nUsage: Cobain aja"
-    "\n\n\n**Semoga Harimu Menyenangkan**\n➥ `Alvin`"
-})
+CMD_HELP.update(
+    {
+        "memes": ">`.cowsay`"
+        "\nUsage: sapi yang mengatakan sesuatu."
+        "\n\n> .cp"
+        "\nUsage: Copy paste meme terkenal"
+        "\n\n>`.vapor`"
+        "\nUsage: Menguapkan semuanya!"
+        "\n\n>`.str`"
+        "\nUsage: Regangkan."
+        "\n\n>`.10iq`"
+        "\nUsage: Kamu mundur !!"
+        "\n\n>`.zal`"
+        "\nUsage: Munculkan perasaan kacau."
+        "\n\n>`.Oem`"
+        "\nPenggunaan: Oeeeem"
+        "\n\n>`.fp`"
+        "\nUsage: Telapak Tangan:P"
+        "\n\n>`.moon`"
+        "\nUsage: animasi bulan."
+        "\n\n>`.clock`"
+        "\nUsage: animasi jam."
+        "\n\n>`.hi`"
+        "\nUsage: Sapa semuanya!"
+        "\n\n>`.coinflip` <Kepala/Ekor>"
+        "\nUsage: Melempar koin !!"
+        "\n\n>`.owo`"
+        "\nUsage: UwU"
+        "\n\n>`.react`"
+        "\nUsage: Buat Userbot Anda bereaksi terhadap semuanya."
+        "\n\n>`.slap`"
+        "\nUsage: balas tampar mereka dengan benda acak !!"
+        "\n\n>`.cry`"
+        "\nUsage: jika kamu melakukan ini, aku akan menangis."
+        "\n\n>`.shg`"
+        "\nUsage: Angkat bahu!"
+        "\n\n>`.run`"
+        "\nUsage: Biarkan Aku Lari, Lari, LARI!"
+        "\n\n>`.chase`"
+        "\nUsage: Sebaiknya Anda mulai berlari"
+        "\n\n>`.metoo`"
+        "\nUsage: Haha ya"
+        "\n\n>`.mock`"
+        "\nUsage: Lakukan dan temukan kesenangan yang sesungguhnya."
+        "\n\n>`.clap`"
+        "\nUsage: Puji orang!"
+        "\n\n>`.f` <emoji/karakter>"
+        "\nUsage: F."
+        "\n\n>`.bt`"
+        "\nUsage: Percayalah, Anda akan menemukan ini berguna."
+        "\n\n>`.weeb`"
+        "\nUsage: Untuk Mengubah Teks Menjadi Weeb-ify."
+        "\n\n>`.type` <teks>"
+        "\nUsage: Hanya perintah kecil untuk membuat keyboard Anda menjadi mesin tik!"
+        "\n\n>`.lfy` <query>"
+        "\nUsage: Biar saya Google itu untuk Anda dengan cepat!"
+        "\n\n>`.decide` [Alternatif: (.yes, .no, .maybe)]"
+        "\nUsage: Buat keputusan cepat."
+        "\n\n> `.nou` `.bot` `.rock` `.gey` `.tf` `.paw` `.tai` `.nih`"
+        "\n> `.fag` `.gtfo`; `.stfu` `.lol` `.lool` `.fail` `.leave`"
+        "\n> `.iwi` `.sayhi` `.koc` `.gas` `.earth` `.love` `.rain`"
+        "\n> `.penis` `.emo` `.fuck` `.skull`  `.monyet`\nUsage: Cobain aja"
+        "\n\n\n**Semoga Harimu Menyenangkan**\n➥ `Alvin`"
+    }
+)
