@@ -123,13 +123,13 @@ async def repeat(rep):
 @register(outgoing=True, pattern=r"^\.repoori$")
 async def repo_is_here(wannasee):
     """ For .repo command, just returns the repo URL. """
-    await wannasee.edit("[Lord-Userbot](https://github.com/Zora24/Lord-Userbot)")
+    await wannasee.edit("[Nightcore](https://github.com/IrhamFadzillah/Nightcore)")
 
 
 @register(outgoing=True, pattern=r"^\.repo$")
 async def repo_is_here(wannasee):
     """ For .repo command, just returns the repo URL. """
-    await wannasee.edit("[﹝𝙚𝙯𝙗𝙬﹞](https://github.com/ez69bw/ezbw)")
+    await wannasee.edit("[﹝𝙚𝙯𝙗𝙬﹞](https://github.com/hbreakclub/ezbw)")
 
 
 @register(outgoing=True, pattern="^.raw$")
