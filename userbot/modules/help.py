@@ -29,7 +29,7 @@ async def help(event):
         string = ""
         for i in CMD_HELP:
             string += "`" + str(i)
-            string += "`\t❱ ⌁  "
+            string += "`\t❱ ⌁ ❰"
         await event.edit(
             f"ㅤㅤ**〤 INFORMASI DYNO 〤**\n\n**━━━━━━━━━━━━━━━━━━━**\n"
             f"❰{string}"
