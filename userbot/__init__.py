@@ -221,6 +221,20 @@ with bot:
             "valid entity. Check your environment variables/config.env file.")
         quit(1)
 
+
+async def check_alive():
+    await bot.send_message(BOTLOG_CHATID, "**﹝𝙚𝙯𝙗𝙬 ᴊᴏɪɴ﹞**")
+    return
+
+with bot:
+    try:
+        bot.loop.run_until_complete(check_alive())
+    except BaseException:
+        LOGS.info(
+            "BOTLOG_CHATID environment variable isn't a "
+            "valid entity. Check your environment variables/config.env file.")
+        quit(1)
+
 # Global Variables
 COUNT_MSG = 0
 USERS = {}

@@ -5,10 +5,12 @@
 #
 # Port to userbot by @MoveAngel
 
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-from userbot import bot, CMD_HELP
-from userbot.events import register
 from asyncio.exceptions import TimeoutError
+
+from telethon.errors.rpcerrorlist import YouBlockedUserError
+
+from userbot import CMD_HELP, bot
+from userbot.events import register
 
 
 @register(outgoing=True, pattern=r"^\.sa(?: |$)(.*)")
@@ -33,9 +35,7 @@ async def lastname(steal):
                 r = await conv.get_response()
                 response = await conv.get_response()
             except YouBlockedUserError:
-                await steal.reply(
-                    "```Unblock @sangmatainfo_bot Dan Coba Lagi```"
-                )
+                await steal.reply("```Unblock @sangmatainfo_bot Dan Coba Lagi```")
                 return
             if r.text.startswith("Name"):
                 respond = await conv.get_response()
@@ -47,7 +47,9 @@ async def lastname(steal):
             if response.text.startswith("No records") or r.text.startswith(
                 "No records"
             ):
-                await steal.edit("```Saya Tidak Menemukan Informasi Pergantian Nama, Orang Ini Sangat Nolep Hingga Tidak Pernah Mengganti Nama```")
+                await steal.edit(
+                    "```Saya Tidak Menemukan Informasi Pergantian Nama, Orang Ini Sangat Nolep Hingga Tidak Pernah Mengganti Nama```"
+                )
                 await steal.client.delete_messages(
                     conv.chat_id, [msg.id, r.id, response.id]
                 )
@@ -62,8 +64,9 @@ async def lastname(steal):
         return await steal.edit("`Botnya Lagi Gamood`")
 
 
-CMD_HELP.update({
-    "sangmata":
-        "`.sa`\
+CMD_HELP.update(
+    {
+        "sangmata": "`.sa`\
           \nUsage: Mendapatkan Riwayat Nama Pengguna."
-})
+    }
+)

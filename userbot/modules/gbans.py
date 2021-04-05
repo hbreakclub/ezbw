@@ -2,14 +2,15 @@
 # Lord Userbot
 
 from telethon.events import ChatAction
-from userbot import ALIVE_NAME, CMD_HELP, bot
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
-from userbot.events import register
 from telethon.tl.types import MessageEntityMentionName
+
+from userbot import ALIVE_NAME, CMD_HELP, bot
+from userbot.events import register
 
 
 async def get_full_user(event):
-    args = event.pattern_match.group(1).split(':', 1)
+    args = event.pattern_match.group(1).split(":", 1)
     extra = None
     if event.reply_to_msg_id and not len(args) == 2:
         previous_message = await event.get_reply_message()
@@ -26,8 +27,7 @@ async def get_full_user(event):
             return
         if event.message.entities is not None:
             probable_user_mention_entity = event.message.entities[0]
-            if isinstance(probable_user_mention_entity,
-                          MessageEntityMentionName):
+            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
                 user_id = probable_user_mention_entity.user_id
                 user_obj = await event.client.get_entity(user_id)
                 return user_obj
@@ -47,6 +47,8 @@ async def get_user_from_id(user, event):
         await event.edit(str(err))
         return None
     return user_obj
+
+
 # Ported For Lord-Userbot by liualvinas/Alvin
 
 
@@ -132,7 +134,7 @@ async def gben(userbot):
             await userbot.client(BlockRequest(user))
         except BaseException:
             pass
-        testuserbot=[
+        testuserbot = [
             d.entity.id
             for d in await userbot.client.get_dialogs()
             if (d.is_group or d.is_channel)
@@ -148,7 +150,9 @@ async def gben(userbot):
         await dark.edit(f"`Reply Ke Pesan`")
     try:
         if gmute(user.id) is False:
-            return await dark.edit(f"**Kesalahan! Pengguna Ini Sudah Kena Perintah Global Banned.**")
+            return await dark.edit(
+                f"**Kesalahan! Pengguna Ini Sudah Kena Perintah Global Banned.**"
+            )
     except BaseException:
         pass
     return await dark.edit(
@@ -156,33 +160,33 @@ async def gben(userbot):
     )
 
 
-@ register(outgoing=True, pattern="^.ungban(?: |$)(.*)")
+@register(outgoing=True, pattern="^.ungban(?: |$)(.*)")
 async def gunben(userbot):
-    dc=userbot
-    sender=await dc.get_sender()
-    me=await dc.client.get_me()
+    dc = userbot
+    sender = await dc.get_sender()
+    me = await dc.client.get_me()
     if not sender.id == me.id:
-        dark=await dc.reply("`Membatalkan Perintah Global Banned!`")
+        dark = await dc.reply("`Membatalkan Perintah Global Banned!`")
     else:
-        dark=await dc.edit("`↺ Membatalkan Perintah Global Banned!`")
-    me=await userbot.client.get_me()
+        dark = await dc.edit("`↺ Membatalkan Perintah Global Banned!`")
+    me = await userbot.client.get_me()
     await dark.edit(f"`↺ Memulai Membatalkan Perintah Global Banned.`")
-    my_mention="[{}](tg://user?id={})".format(me.first_name, me.id)
+    my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     f"@{me.username}" if me.username else my_mention
     await userbot.get_chat()
-    a=b=0
+    a = b = 0
     if userbot.is_private:
-        user=userbot.chat
-        reason=userbot.pattern_match.group(1)
+        user = userbot.chat
+        reason = userbot.pattern_match.group(1)
     else:
         userbot.chat.title
     try:
-        user, reason=await get_full_user(userbot)
+        user, reason = await get_full_user(userbot)
     except BaseException:
         pass
     try:
         if not reason:
-            reason="Private"
+            reason = "Private"
     except BaseException:
         return await dark.edit("`Terjadi Kesalahan ヅ`")
     if user:
@@ -208,7 +212,7 @@ async def gunben(userbot):
             await userbot.client(UnblockRequest(user))
         except BaseException:
             pass
-        testuserbot=[
+        testuserbot = [
             d.entity.id
             for d in await userbot.client.get_dialogs()
             if (d.is_group or d.is_channel)
@@ -224,7 +228,9 @@ async def gunben(userbot):
         await dark.edit("`Reply Ke Korban`")
     try:
         if ungmute(user.id) is False:
-            return await dark.edit("**Kesalahan! Pengguna Sedang Tidak Di Global Banned.**")
+            return await dark.edit(
+                "**Kesalahan! Pengguna Sedang Tidak Di Global Banned.**"
+            )
     except BaseException:
         pass
     return await dark.edit(
@@ -232,10 +238,12 @@ async def gunben(userbot):
     )
 
 
-CMD_HELP.update({
-    "gban": "\
+CMD_HELP.update(
+    {
+        "gban": "\
 `.gban`\
 \nUsage: Melakukan Banned Secara Global Ke Semua Grup Dimana Kamu Sebagai Admin.\
 \n\n`.ungban`\
 \nUsage: Membatalkan Global Banned"
-})
+    }
+)

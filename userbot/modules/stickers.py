@@ -20,7 +20,9 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from userbot import CMD_HELP, S_PACK_NAME as custompack, bot
+from userbot import CMD_HELP
+from userbot import S_PACK_NAME as custompack
+from userbot import bot
 from userbot.events import register
 
 KANGING_STR = [
@@ -97,7 +99,7 @@ async def kang(args):
                 emoji = splat[1]
 
         packname = f"a{user.id}_by_{user.username}_{pack}"
-        custom_packnick = f"{custompack}" or f"{f_name}"
+        f"{custompack}" or f"{f_name}"
         packnick = f"{pack} punya @{user.username}"
         cmd = "/newpack"
         file = io.BytesIO()
@@ -360,4 +362,6 @@ CMD_HELP.update(
         "\n\n>`.stkrinfo`"
         "\nUsage: Gets info about the sticker pack."
         "\n\n>`.getsticker`"
-        "\nUsage: reply to a sticker to get 'PNG' file of sticker."})
+        "\nUsage: reply to a sticker to get 'PNG' file of sticker."
+    }
+)

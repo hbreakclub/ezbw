@@ -6,22 +6,21 @@
 # System Stats Lord-Userbot
 
 import asyncio
-from asyncio import create_subprocess_exec as asyncrunapp
-from asyncio.subprocess import PIPE as asyncPIPE
-from platform import python_version, uname
-from shutil import which
-from os import remove
-from telethon import version
-from telethon import __version__, version
 import platform
 import sys
 import time
+from asyncio import create_subprocess_exec as asyncrunapp
+from asyncio.subprocess import PIPE as asyncPIPE
 from datetime import datetime
+from os import remove
+from platform import python_version, uname
+from shutil import which
+
 import psutil
+from telethon import __version__, version
 
-from userbot import ALIVE_LOGO, ALIVE_NAME, BOT_VER, LORD_TEKS_KUSTOM, CMD_HELP, StartTime, UPSTREAM_REPO_BRANCH, bot
+from userbot import ALIVE_LOGO, ALIVE_NAME, BOT_VER, CMD_HELP, StartTime, bot
 from userbot.events import register
-
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
@@ -39,9 +38,7 @@ async def get_readable_time(seconds: int) -> str:
 
     while count < 4:
         count += 1
-        remainder, result = divmod(
-            seconds, 60) if count < 3 else divmod(
-            seconds, 24)
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))
@@ -72,10 +69,8 @@ async def psu(event):
     softw += f"`Waktu Hidup: {bt.day}/{bt.month}/{bt.year}  {bt.hour}:{bt.minute}:{bt.second}`\n"
     # CPU Cores
     cpuu = "**Informasi CPU**\n"
-    cpuu += "`Physical cores   : " + \
-        str(psutil.cpu_count(logical=False)) + "`\n"
-    cpuu += "`Total cores      : " + \
-        str(psutil.cpu_count(logical=True)) + "`\n"
+    cpuu += "`Physical cores   : " + str(psutil.cpu_count(logical=False)) + "`\n"
+    cpuu += "`Total cores      : " + str(psutil.cpu_count(logical=True)) + "`\n"
     # CPU frequencies
     cpufreq = psutil.cpu_freq()
     cpuu += f"`Max Frequency    : {cpufreq.max:.2f}Mhz`\n"
@@ -128,8 +123,7 @@ async def sysdetails(sysd):
             )
 
             stdout, stderr = await fetch.communicate()
-            result = str(stdout.decode().strip()) + \
-                str(stderr.decode().strip())
+            result = str(stdout.decode().strip()) + str(stderr.decode().strip())
 
             await sysd.edit("`" + result + "`")
         except FileNotFoundError:
@@ -164,10 +158,7 @@ async def bot_ver(event):
         revout = str(stdout.decode().strip()) + str(stderr.decode().strip())
 
         await event.edit(
-            "**☛**𝙚𝙯𝙗𝙬 Versi:** \n "
-            f"{verout}"
-            "\n**☛**Revisi:**\n "
-            f"{revout}"
+            "**☛**𝙚𝙯𝙗𝙬 Versi:** \n " f"{verout}" "\n**☛**Revisi:**\n " f"{revout}"
         )
     else:
         await event.edit(
@@ -225,7 +216,7 @@ async def pipcheck(pip):
 
 @register(outgoing=True, pattern=r"^\.(?:alive|on)\s?(.)?")
 async def amireallyalive(alive):
-    user = await bot.get_me()
+    await bot.get_me()
     await get_readable_time((time.time() - StartTime))
     await alive.edit("`I'M ALIVE!`")
     await alive.edit("⚡")
@@ -241,9 +232,9 @@ async def amireallyalive(alive):
     )
     if ALIVE_LOGO:
         try:
-            logo=ALIVE_LOGO
+            logo = ALIVE_LOGO
             await alive.delete()
-            msg=await bot.send_file(alive.chat_id, logo, caption=output)
+            msg = await bot.send_file(alive.chat_id, logo, caption=output)
             await asyncio.sleep(500)
             await msg.delete()
         except BaseException:
@@ -259,41 +250,57 @@ async def amireallyalive(alive):
         await alive.delete()
 
 
-@ register(outgoing=True, pattern="^.aliveu")
+@register(outgoing=True, pattern="^.aliveu")
 async def amireallyaliveuser(username):
     """ For .aliveu command, change the username in the .alive command. """
-    message=username.text
-    output=".aliveu [username] tidak boleh kosong"
+    message = username.text
+    output = ".aliveu [username] tidak boleh kosong"
     if not (message == ".aliveu" or message[7:8] != " "):
-        newuser=message[8:]
+        newuser = message[8:]
         global DEFAULTUSER
-        DEFAULTUSER=newuser
-        output="Berhasil mengubah pengguna pada .alive ke " + newuser + "!"
+        DEFAULTUSER = newuser
+        output = "Berhasil mengubah pengguna pada .alive ke " + newuser + "!"
     await username.edit("`" f"{output}" "`")
 
 
-@ register(outgoing=True, pattern=r"^\.resetalive$")
+@register(outgoing=True, pattern=r"^\.resetalive$")
 async def amireallyalivereset(ureset):
     global DEFAULTUSER
-    DEFAULTUSER=str(ALIVE_NAME) if ALIVE_NAME else uname().node
+    DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
     await ureset.edit("`" "Berhasil mereset pengguna Alive!" "`")
 
 
-CMD_HELP.update({"sysd": "`.sysd`\
+CMD_HELP.update(
+    {
+        "sysd": "`.sysd`\
     \nPenjelasan: Menampilkan informasi sistem menggunakan neofetch.\
     \n\n.spc\
     \nPenjelasan: Tampilkan spesifikasi sistem.\
     \n\n`.db`\
-    \nPenjelasan: Menampilkan info database."})
-CMD_HELP.update({"botver": "`.botver`\
-    \nPenjelasan: Menampilkan versi userbot."})
+    \nPenjelasan: Menampilkan info database."
+    }
+)
+CMD_HELP.update(
+    {
+        "botver": "`.botver`\
+    \nPenjelasan: Menampilkan versi userbot."
+    }
+)
 
-CMD_HELP.update({"pip": "`.pip <module(s)>`\
-    \nPenjelasan: Melakukan pencarian modul pip."})
+CMD_HELP.update(
+    {
+        "pip": "`.pip <module(s)>`\
+    \nPenjelasan: Melakukan pencarian modul pip."
+    }
+)
 
-CMD_HELP.update({"alive": "`.alive` | `.on`\
+CMD_HELP.update(
+    {
+        "alive": "`.alive` | `.on`\
     \nPenjelasan: Ketik .alive/.on untuk melihat apakah bot Anda berfungsi atau tidak.\
     \n\n`.aliveu <text>`\
     \nPenjelasan: Mengubah 'pengguna' menjadi teks yang Anda inginkan.\
     \n\n`.resetalive`\
-    \nPenjelasan: Mengatur ulang pengguna ke default."})
+    \nPenjelasan: Mengatur ulang pengguna ke default."
+    }
+)
