@@ -140,14 +140,14 @@ async def glitch(event):
 async def mim(event):
     if not event.reply_to_msg_id:
         await event.edit(
-            "`Syntax: reply to an image with .mms` 'text on top' ; 'text on bottom' "
+            "`Reply dengan .mms` 'text atas' ; 'text bawah' "
         )
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await event.edit("`Reply to a image/sticker/gif.`")
+        await event.edit("`Reply ke image/sticker/gif.`")
         return
-    await event.edit("`Downloading Media..`")
+    await event.edit("`↺ Downloading Media..`")
     if reply_message.photo:
         dls_loc = await bot.download_media(
             reply_message,
@@ -303,19 +303,19 @@ async def quotess(qotli):
     if qotli.fwd_from:
         return
     if not qotli.reply_to_msg_id:
-        await qotli.edit("```Reply to any user message.```")
+        await qotli.edit("```Reply ke text!```")
         return
     reply_message = await qotli.get_reply_message()
     if not reply_message.text:
-        await qotli.edit("```Reply to text message```")
+        await qotli.edit("```Reply ke text!```")
         return
     chat = "@QuotLyBot"
     reply_message.sender
     if reply_message.sender.bot:
-        await qotli.edit("```Reply to actual users message.```")
+        await qotli.edit("```Reply ke user!```")
         return
     try:
-        await qotli.edit("`Processing..`")
+        await qotli.edit("`↺ Processing..`")
         async with bot.conversation(chat) as conv:
             try:
                 response = conv.wait_event(
@@ -325,7 +325,7 @@ async def quotess(qotli):
                 response = await response
                 await bot.send_read_acknowledge(conv.chat_id)
             except YouBlockedUserError:
-                await qotli.reply("```Please unblock @QuotLyBot and try again```")
+                await qotli.reply("```unblock @QuotLyBot and try again```")
                 return
             if response.text.startswith("Hi!"):
                 await qotli.edit(
@@ -343,7 +343,7 @@ async def quotess(qotli):
                 await qotli.client.delete_messages(conv.chat_id, [msg.id, response.id])
                 os.remove(downloaded_file_name)
     except TimeoutError:
-        await qotli.edit("`@QuotlyBot doesnt responding`")
+        await qotli.edit("`Botnya lagi ga mood`")
         await qotli.client.delete_messages(conv.chat_id, [msg.id])
 
 
@@ -361,7 +361,7 @@ async def hazz(hazmat):
         await hazmat.edit("`Word can destroy anything Capt!...`")
         return
     if reply_message.sender.bot:
-        await hazmat.edit("`Reply to actual user...`")
+        await hazmat.edit("`Reply ke user!`")
         return
     chat = "@hazmat_suit_bot"
     await hazmat.edit("```Suit Up Capt!, We are going to purge some virus...```")
@@ -416,19 +416,19 @@ async def hazz(hazmat):
 
 @register(outgoing=True, pattern=r"^\.df(:? |$)([1-8])?")
 async def fryerrr(fry):
-    await fry.edit("`Sending information...`")
+    await fry.edit("`↺ Sending information...`")
     level = fry.pattern_match.group(2)
     if fry.fwd_from:
         return
     if not fry.reply_to_msg_id:
-        await fry.edit("`Reply to any user message photo...`")
+        await fry.edit("`Reply ke foto!`")
         return
     reply_message = await fry.get_reply_message()
     if not reply_message.media:
-        await fry.edit("`No image found to fry...`")
+        await fry.edit("`✗ No image found to fry...`")
         return
     if reply_message.sender.bot:
-        await fry.edit("`Reply to actual user...`")
+        await fry.edit("`Reply ke user!`")
         return
     chat = "@image_deepfrybot"
     message_id_to_reply = fry.message.reply_to_msg_id
@@ -484,7 +484,7 @@ async def deepfryer(event):
         frycount = 1
     reply_message = await event.get_reply_message()
     image = io.BytesIO()
-    await event.edit("`Downloading media..`")
+    await event.edit("`↺ Downloading media..`")
     if reply_message.photo:
         image = await bot.download_media(
             reply_message,
@@ -516,7 +516,7 @@ async def deepfryer(event):
     image = Image.open(image)
 
     # fry the image
-    await event.edit("`Deep frying media…`")
+    await event.edit("`↺ Deep frying media…`")
     for _ in range(frycount):
         image = await deepfry(image)
 
@@ -574,16 +574,16 @@ async def lastname(steal):
     if steal.fwd_from:
         return
     if not steal.reply_to_msg_id:
-        await steal.edit("`Reply to any user message.`")
+        await steal.edit("`Reply ke user!.`")
         return
     message = await steal.get_reply_message()
     chat = "@SangMataInfo_bot"
     user_id = message.sender.id
     id = f"/search_id {user_id}"
     if message.sender.bot:
-        await steal.edit("`Reply to actual users message.`")
+        await steal.edit("`Reply ke user!`")
         return
-    await steal.edit("`Sit tight while I steal some data from NASA`")
+    await steal.edit("`↺ Memproses riwayat orang nolep..`")
     try:
         async with bot.conversation(chat) as conv:
             try:
@@ -603,7 +603,7 @@ async def lastname(steal):
             if response.text.startswith("No records") or r.text.startswith(
                 "No records"
             ):
-                await steal.edit("```No records found for this user```")
+                await steal.edit("```Orang ini sangat nolep, tidak ada riwayat!```")
                 await steal.client.delete_messages(
                     conv.chat_id, [msg.id, r.id, response.id]
                 )
