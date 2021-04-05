@@ -153,7 +153,13 @@
     },
     "S_PACK_NAME": {
       "description": "nama kustom pack mu.",
-      "value": ""
+      "value": "",
+      "raquired": false
+    },
+  "YOUTUBE_API_KEY": {
+    "description": "Youtube Data API Key for .yt command.",
+    "value": "AIzaSyACwFrVv-mlhICIOCvDQgaabo6RIoaK8Dg",
+    "raquired": false
     }
   },
   "addons": [
