@@ -35,6 +35,6 @@ async def help(event):
             f"❰{string}"
             f"\n━━━━━━━━━━━━━━━━━━━\n"
             f"**Ketik Contoh** `.help afk` **Dengan nama perintah untuk melihat cara menggunakannya.**"
-            )
+        )
         await asyncio.sleep(1000)
         await event.delete()
