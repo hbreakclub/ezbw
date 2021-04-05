@@ -98,16 +98,17 @@ async def pingme(pong):
 async def pingme(pong):
     """ For .ping command, ping the userbot from any chat.  """
     start = datetime.now()
-    await pong.edit("`....`")
-    await pong.edit("**ᴜꜱᴇʀ    :** \n`....`")
-    await pong.edit("**ᴜꜱᴇʀ    :** \n**ᴘɪɴɢㅤ :** \n`....`")
-    await pong.edit("**ᴜꜱᴇʀ    :** \n**ᴘɪɴɢㅤ :** \n**ᴏɴʟɪɴᴇ :** ")
+    await pong.edit("`....`ㅤㅤㅤㅤㅤㅤㅤ ㅤ")
+    await pong.edit("**ᴜꜱᴇʀ    :**ㅤㅤㅤㅤㅤ  \n`....`")
+    await pong.edit("**ᴜꜱᴇʀ    :** \n**ᴘɪɴɢㅤ :**ㅤㅤㅤㅤㅤ  \n`....`")
+    await pong.edit("**ᴜꜱᴇʀ    :** \n**ᴘɪɴɢㅤ :** \n**ᴏɴʟɪɴᴇ :**")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
     await pong.edit(
-        f"**ᴜꜱᴇʀ    :** {ALIVE_NAME}\n**ᴘɪɴɢㅤ :** `%sms`\n**ᴏɴʟɪɴᴇ :** {uptime}"
-        % (duration)
-    )
+        f"**ᴜꜱᴇʀ    :** {ALIVE_NAME}\n"
+        f"**ᴘɪɴɢㅤ :** `%sms`\n"
+        f"**ᴏɴʟɪɴᴇ :** `{uptime}` \n" % (duration)
+        )
 
 
 @register(outgoing=True, pattern="^.sinyal$")
@@ -125,7 +126,7 @@ async def pingme(pong):
     end = datetime.now()
     duration = (end - start).microseconds / 1000
     await pong.edit(
-        f"- 𝐋 𝐎 𝐑 𝐃 -\n"
+        f"- 𝙚 𝙯 𝙗 𝙬 -\n"
         f"**• ꜱɪɴʏᴀʟ  :** "
         f"`%sms` \n"
         f"**• ᴏɴʟɪɴᴇ  :** "
