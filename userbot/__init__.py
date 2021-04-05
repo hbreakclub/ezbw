@@ -119,6 +119,12 @@ ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 # Default .alive name
 ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
 
+# Bot Name
+TERM_ALIAS = os.environ.get("TERM_ALIAS", "𝙚𝙯𝙗𝙬")
+
+# Bot version
+BOT_VER = os.environ.get("BOT_VER", "4.0")
+
 # Time & Date - Country and Time Zone
 COUNTRY = str(os.environ.get("COUNTRY", ""))
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
