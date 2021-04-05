@@ -42,7 +42,6 @@ from youtube_search import YoutubeSearch
 
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
-from userbot.modules.upload_download import get_video_thumb
 from userbot.utils import chrome, googleimagesdownload, progress
 from userbot.utils.FastTelethon import upload_file
 

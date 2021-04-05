@@ -139,9 +139,7 @@ async def glitch(event):
 @register(outgoing=True, pattern=r"^\.mmf(?: |$)(.*)")
 async def mim(event):
     if not event.reply_to_msg_id:
-        await event.edit(
-            "`Reply dengan .mms` 'text atas' ; 'text bawah' "
-        )
+        await event.edit("`Reply dengan .mms` 'text atas' ; 'text bawah' ")
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
